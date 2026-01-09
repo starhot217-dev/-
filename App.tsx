@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Blueprint from './components/Blueprint';
@@ -151,19 +150,22 @@ const App: React.FC = () => {
       case 'reports': return <Reports orders={orders} />;
       case 'settings': return <Settings config={pricingConfig} onSave={(newConfig) => setPricingConfig(newConfig)} />;
       case 'line': return (
-        <div className="flex h-full p-8 bg-slate-50">
-          <div className="flex-1 bg-white rounded-[3rem] p-10 mr-8 overflow-y-auto custom-scrollbar border border-slate-100">
-             <h3 className="text-2xl font-black mb-8">LINE 派單整合</h3>
-             <div className="p-8 bg-emerald-50 rounded-[2rem] border border-emerald-100">
+        <div className="flex flex-col lg:flex-row h-full p-4 lg:p-8 bg-slate-50 gap-6">
+          <div className="flex-1 bg-white rounded-3xl lg:rounded-[3rem] p-6 lg:p-10 overflow-y-auto custom-scrollbar border border-slate-100">
+             <h3 className="text-xl lg:text-2xl font-black mb-4 lg:mb-8">LINE 派單整合</h3>
+             <div className="p-6 lg:p-8 bg-emerald-50 rounded-2xl lg:rounded-[2rem] border border-emerald-100">
                <div className="flex items-center gap-4 mb-4">
-                 <i className="fab fa-line text-4xl text-[#00b900]"></i>
-                 <p className="text-xl font-black">高雄司機大群組 (已連線)</p>
+                 <i className="fab fa-line text-3xl lg:text-4xl text-[#00b900]"></i>
+                 <p className="text-lg lg:text-xl font-black">高雄司機大群組 (已連線)</p>
                </div>
-               <p className="text-sm text-emerald-700 font-medium">自動化機器人已就緒，所有調度中心的「派遣」操作將會自動推送到此群組。</p>
+               <p className="text-xs lg:text-sm text-emerald-700 font-medium">自動化機器人已就緒，所有調度中心的「派遣」操作將會自動推送到此群組。</p>
              </div>
           </div>
-          <div className="w-[420px] h-full rounded-[4rem] border-[14px] border-slate-900 bg-slate-900 relative shadow-2xl overflow-hidden">
+          <div className="hidden lg:block w-[420px] h-full rounded-[4rem] border-[14px] border-slate-900 bg-slate-900 relative shadow-2xl overflow-hidden">
             <LineAutomation logs={lineLogs} onSendMessage={handleLineReply} />
+          </div>
+          <div className="lg:hidden h-[500px] rounded-3xl border-4 border-slate-900 bg-slate-900 relative overflow-hidden">
+             <LineAutomation logs={lineLogs} onSendMessage={handleLineReply} />
           </div>
         </div>
       );
@@ -172,39 +174,37 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-50 selection:bg-rose-100 selection:text-rose-700">
+    <div className="min-h-screen flex bg-slate-50 selection:bg-rose-100 selection:text-rose-700 overflow-x-hidden">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <main className="flex-1 ml-64 min-h-screen flex flex-col relative overflow-hidden">
-        {/* Decorative Background Elements */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-rose-50/40 rounded-full blur-[140px] -mr-80 -mt-80 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-rose-50/20 rounded-full blur-[100px] -ml-40 -mb-40 pointer-events-none"></div>
+      <main className="flex-1 md:ml-64 min-h-screen flex flex-col relative pb-24 md:pb-0">
+        <div className="absolute top-0 right-0 w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-rose-50/40 rounded-full blur-[80px] lg:blur-[140px] -mr-40 lg:-mr-80 -mt-40 lg:-mt-80 pointer-events-none"></div>
         
-        <header className="h-20 bg-white/70 backdrop-blur-xl border-b border-slate-100 flex items-center justify-between px-10 sticky top-0 z-40">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-2.5 h-2.5 bg-rose-600 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
-              <span className="text-slate-800 text-xs font-black uppercase tracking-[0.2em]">
-                千尋派車系統 v2.6
+        <header className="h-16 lg:h-20 bg-white/70 backdrop-blur-xl border-b border-slate-100 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40">
+          <div className="flex items-center gap-3 lg:gap-6">
+            <div className="flex items-center gap-2 lg:gap-3">
+              <div className="w-2 lg:w-2.5 h-2 lg:h-2.5 bg-rose-600 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
+              <span className="text-slate-800 text-[10px] lg:text-xs font-black uppercase tracking-[0.1em] lg:tracking-[0.2em] truncate max-w-[100px] lg:max-w-none">
+                千尋 v2.6
               </span>
             </div>
             <div className="h-4 w-px bg-slate-200"></div>
-            <h2 className="text-slate-800 font-black text-sm tracking-tight">
+            <h2 className="text-slate-800 font-black text-xs lg:text-sm tracking-tight">
               {activeTab.toUpperCase()}
             </h2>
           </div>
           
-          <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-xs font-black text-slate-800 tracking-tight leading-none">Dispatcher CHIHIRO</p>
-                <p className="text-[9px] font-black text-rose-400 uppercase tracking-widest mt-1">Kaohsiung HUB</p>
+          <div className="flex items-center gap-3 lg:gap-4">
+              <div className="text-right hidden sm:block">
+                <p className="text-[10px] lg:text-xs font-black text-slate-800 tracking-tight leading-none">Dispatcher CHIHIRO</p>
+                <p className="text-[8px] lg:text-[9px] font-black text-rose-400 uppercase tracking-widest mt-1">Kaohsiung HUB</p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-white p-1 shadow-xl shadow-rose-100/50 border border-slate-100 group cursor-pointer hover:scale-110 transition-transform">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Chihiro&backgroundColor=ffdfbf" alt="avatar" className="w-full h-full rounded-[0.8rem] bg-rose-50" />
+              <div className="w-8 h-8 lg:w-12 h-12 rounded-xl lg:rounded-2xl bg-white p-0.5 lg:p-1 shadow-md lg:shadow-xl border border-slate-100">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Chihiro&backgroundColor=ffdfbf" alt="avatar" className="w-full h-full rounded-lg lg:rounded-[0.8rem] bg-rose-50" />
               </div>
           </div>
         </header>
 
-        <div className="flex-1 overflow-auto custom-scrollbar relative z-10">
+        <div className="flex-1 overflow-x-hidden relative z-10">
           {renderContent()}
         </div>
       </main>
