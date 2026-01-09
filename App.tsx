@@ -15,6 +15,7 @@ import { Order, OrderStatus, LineLog, Vehicle } from './types';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('client');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [orders, setOrders] = useState<Order[]>(() => {
     const saved = localStorage.getItem('chihiro_orders');
     return saved ? JSON.parse(saved) : INITIAL_ORDERS;
@@ -175,20 +176,28 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex bg-slate-50 selection:bg-rose-100 selection:text-rose-700 overflow-x-hidden">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <main className="flex-1 md:ml-64 min-h-screen flex flex-col relative pb-24 md:pb-0">
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <main className="flex-1 md:ml-64 min-h-screen flex flex-col relative">
         <div className="absolute top-0 right-0 w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-rose-50/40 rounded-full blur-[80px] lg:blur-[140px] -mr-40 lg:-mr-80 -mt-40 lg:-mt-80 pointer-events-none"></div>
         
         <header className="h-16 lg:h-20 bg-white/70 backdrop-blur-xl border-b border-slate-100 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40">
           <div className="flex items-center gap-3 lg:gap-6">
+            {/* Mobile Menu Toggle */}
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 active:scale-90 transition-transform"
+            >
+              <i className="fas fa-bars"></i>
+            </button>
+
             <div className="flex items-center gap-2 lg:gap-3">
               <div className="w-2 lg:w-2.5 h-2 lg:h-2.5 bg-rose-600 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
-              <span className="text-slate-800 text-[10px] lg:text-xs font-black uppercase tracking-[0.1em] lg:tracking-[0.2em] truncate max-w-[100px] lg:max-w-none">
+              <span className="text-slate-800 text-[10px] lg:text-xs font-black uppercase tracking-[0.1em] lg:tracking-[0.2em] truncate max-w-[80px] lg:max-w-none">
                 千尋 v2.6
               </span>
             </div>
-            <div className="h-4 w-px bg-slate-200"></div>
-            <h2 className="text-slate-800 font-black text-xs lg:text-sm tracking-tight">
+            <div className="hidden sm:block h-4 w-px bg-slate-200"></div>
+            <h2 className="hidden sm:block text-slate-800 font-black text-xs lg:text-sm tracking-tight">
               {activeTab.toUpperCase()}
             </h2>
           </div>
@@ -198,7 +207,7 @@ const App: React.FC = () => {
                 <p className="text-[10px] lg:text-xs font-black text-slate-800 tracking-tight leading-none">Dispatcher CHIHIRO</p>
                 <p className="text-[8px] lg:text-[9px] font-black text-rose-400 uppercase tracking-widest mt-1">Kaohsiung HUB</p>
               </div>
-              <div className="w-8 h-8 lg:w-12 h-12 rounded-xl lg:rounded-2xl bg-white p-0.5 lg:p-1 shadow-md lg:shadow-xl border border-slate-100">
+              <div className="w-10 h-10 lg:w-12 h-12 rounded-xl lg:rounded-2xl bg-white p-0.5 lg:p-1 shadow-md lg:shadow-xl border border-slate-100">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Chihiro&backgroundColor=ffdfbf" alt="avatar" className="w-full h-full rounded-lg lg:rounded-[0.8rem] bg-rose-50" />
               </div>
           </div>
