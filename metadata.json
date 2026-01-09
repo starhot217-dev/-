@@ -1,6 +1,6 @@
 {
-  "name": "SmartFleet Dispatch & Analytics",
-  "description": "A high-performance vehicle dispatching and fleet management system integrated with Google Maps and advanced reporting analytics, featuring Gemini AI for route optimization and performance insights.",
+  "name": "chihiro-fleet-dispatch",
+  "description": "Professional vehicle dispatching and fleet management system for Kaohsiung HUB.",
   "requestFramePermissions": [
     "geolocation"
   ]
